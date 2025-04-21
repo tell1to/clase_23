@@ -1,0 +1,59 @@
+<div class="card">
+    <h3>Pedidos</h3>
+    <p-table [value]="pedidos" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>ID</th>
+                <th>FECHA PEDIDO</th>
+                <th>CLIENTE</th>
+                <th>Quantity</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-pedidos>
+            <tr>
+                <td>{{ pedidos.id }}</td>
+                <td><h5>{{ pedidos.fecha }}</h5></td>
+                <td>
+                    <h6>CLIENTE:{{ pedidos.cliente.nombre_completo }}</h6>
+                    <h6>DNI:{{ pedidos.cliente.dni }}</h6>
+                </td>
+                <!--<td>{{pedidos.productos}}</td>-->
+                <p-button (onClick)="showDialogPedido(pedidos)" label="Ver detalle"></p-button>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<p-dialog 
+    header="pedido" 
+    [(visible)]="mostrar_pedido" 
+    [modal]="true" 
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+    [style]="{ width: '50vw' }" 
+    [draggable]="false" 
+    [resizable]="false">
+        <h4>DETALLES PEDIDO: #{{detalle_pedido?.id}}</h4>
+        <h4>DATOS CLIENTES:</h4>
+        <hr>
+        <h5>Nombre: {{detalle_pedido?.cliente?.nombre_completo}}</h5>
+        <h5>DNI: {{detalle_pedido?.cliente?.dni}}</h5>
+        <h5>Telefono: {{detalle_pedido?.cliente?.telefono}}</h5>
+        <hr>
+        <p-table [value]="detalle_pedido?.productos" [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
+                    
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product>
+                <tr>
+                    <td>{{ product.id }}</td>
+                    <td>{{ pedidos.nombre }}</td>
+                    <td>{{ product.cantidad }}</td>
+                   
+                </tr>
+            </ng-template>
+        </p-table>
+</p-dialog>
